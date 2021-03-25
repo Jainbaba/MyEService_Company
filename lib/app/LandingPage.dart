@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_e_service_company/service/DatabaseService.dart';
 import 'package:my_e_service_company/service/auth.dart';
 import 'package:provider/provider.dart';
 import 'HomePage.dart';
@@ -8,15 +9,16 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthBase>(context);
-    return StreamBuilder<baseUser>(
+    return StreamBuilder<BaseUser>(
         stream: auth.onAuthStateChanges,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
-            baseUser user = snapshot.data;
+            BaseUser user = snapshot.data;
             if (user == null) {
               return SignInPage(isLoading: false,);
             }
-            return HomePage();
+            return Provider<Database>(
+                create: (_) => FireStoreDatabase(uid: user.uid), child: HomePage());
           } else {
             return Scaffold(
               body: Center(

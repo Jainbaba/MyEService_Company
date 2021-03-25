@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:my_e_service_company/app/LandingPage.dart';
+import 'package:my_e_service_company/service/DatabaseService.dart';
 import 'package:my_e_service_company/service/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<AuthBase>(create: (context) => Auth()),
+        Provider<Database>(create: (context) => FireStoreDatabase()),
       ],
       child: MaterialApp(
         title: 'My E Service Company',

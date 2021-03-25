@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:my_e_service_company/app/SignPage/email_sign_in_page.dart';
 import 'package:my_e_service_company/app/SignPage/sign_in_button.dart';
-import 'package:my_e_service_company/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:my_e_service_company/service/auth.dart';
 import 'package:provider/provider.dart';
-
 
 class SignInPage extends StatelessWidget {
   const SignInPage({
     @required this.isLoading,
   });
+
   final bool isLoading;
 
-
   void _signInWithEmail(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
+    Navigator.push(
+      context,
+      MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => EmailSignInPage(),
+        builder: (context) => Provider<AuthBase>(create:(_) => Auth(),child: EmailSignInPage(),)
       ),
     );
   }
