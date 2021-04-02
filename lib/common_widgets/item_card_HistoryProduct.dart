@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:math' as math;
 import 'package:intl/intl.dart';
 import 'package:my_e_service_company/app/Product.dart';
+import 'package:my_e_service_company/app/details_screen.dart';
 
 
 class HistoryProduct extends StatelessWidget {
@@ -31,6 +33,7 @@ class HistoryProduct extends StatelessWidget {
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     /*decoration: BoxDecoration(
@@ -63,22 +66,10 @@ class HistoryProduct extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 14.0),
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                // products is out demo list
-                                product.title,
-                                maxLines: 1,
-                              ),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              Text(
-                                // products is out demo list
-                                "(${product.brand})",
-                                maxLines: 1,
-                              ),
-                            ],
+                          Text(
+                            // products is out demo list
+                            "${product.title} (${product.brand})",
+                            maxLines: 1,
                           ),
                           Text(
                             "${DateFormat("dd-MM-yyyy").format(product.timestamp.toDate())}",
@@ -90,12 +81,26 @@ class HistoryProduct extends StatelessWidget {
                   ),
                   Container(
                     height: 90,
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FaIcon(FontAwesomeIcons.solidCircle,size: 16,
+                        color: product.AcceptedTask ? product.AssignedTask ? product.CompleletedTask ? Colors.transparent : Colors.green : Colors.yellow : Colors.red,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 90,
                    /* decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey)),*/
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          FlatButton(onPressed: () {}, child: Icon(
+                          FlatButton(onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsScreen(product: product,)));
+                          }, child: Icon(
                           Icons.arrow_forward_ios,size: 15,
                         ),minWidth: 1,),
                       ],

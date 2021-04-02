@@ -8,16 +8,29 @@ class Product {
       RequestID,
       Description,
       requestSent;
-  final String UserName, UserPhone, UserEmail;
+  final String UserUid, Username, UserPhone, Useremail;
   final List<dynamic> Attachments;
-  final bool Warrnty, CompleletedTask;
-  final String serialNumber, uploadImage, ExtendedWarrnty;
-  final Timestamp timestamp, completedTimestamp;
+  final bool Warrnty, CompleletedTask, AssignedTask, AcceptedTask;
+  final String serialNumber,
+      uploadImage,
+      ExtendedWarrnty,
+      AssignedTechiename,
+      AssignedTechiePhone;
+  final Timestamp timestamp,
+      completedTimestamp,
+      AssignedTimestamp,
+      AcceptedTimestamp;
 
   Product({
-    this.UserName,
+    this.Username,
     this.UserPhone,
-    this.UserEmail,
+    this.Useremail,
+    this.AssignedTask,
+    this.AcceptedTask,
+    this.AssignedTechiename,
+    this.AssignedTechiePhone,
+    this.AssignedTimestamp,
+    this.AcceptedTimestamp,
     this.completedTimestamp,
     this.CompleletedTask,
     this.requestSent,
@@ -30,18 +43,10 @@ class Product {
     this.timestamp,
     this.serialNumber,
     this.uploadImage,
+    this.UserUid,
     this.brand,
     this.image,
     this.title,
   });
 
-  toJson() {
-    return {
-      "title": title,
-      "image": image,
-      "brand": brand,
-      "category": category,
-      "warranty": Warrnty,
-    };
-  }
 }

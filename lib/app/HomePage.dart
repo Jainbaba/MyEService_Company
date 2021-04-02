@@ -1,8 +1,10 @@
 import 'package:custom_navigator/custom_navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:my_e_service_company/app/Product.dart';
 import 'package:my_e_service_company/app/complete_request.dart';
 import 'package:my_e_service_company/app/new_request.dart';
 import 'package:my_e_service_company/common_widgets/platform_alert_dialog.dart';
+import 'package:my_e_service_company/service/DatabaseService.dart';
 import 'package:my_e_service_company/service/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +19,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   TabController _tabController;
 
+  List<Product> NewRequestProduct;
+
   Future<void> _signOut(BuildContext context) async {
     try {
       final auth = Provider.of<AuthBase>(context,listen: false);
@@ -25,6 +29,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       print(e.toString());
     }
   }
+
+
 
   Future<void> _confirmSignOut(BuildContext context) async {
     final didRequestSignOut = await PlatformAlertDialog(
@@ -42,12 +48,27 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
     _tabController = new TabController(length: 2,vsync: this);
+    //getHistoryData();
   }
+  
+  Future<void> getHistoryData() async {
+    final database = Provider.of<Database>(context, listen: false);
+    await database.getMyRequestProductData().then((value) {
+      setState(() {
+        //myProduct = value;
+        NewRequestProduct = value
+            .where((element) => element.CompleletedTask == false)
+            .toList();
+        print(NewRequestProduct.length);
 
+      });
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+     /* appBar: AppBar(
         title: Text('Home Page'),
         actions: <Widget>[
           TextButton(
@@ -61,7 +82,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             onPressed: () => _confirmSignOut(context),
           ),
         ],
-      ),
+      ),*/
       bottomNavigationBar: new Material(
         color: Colors.indigo,
         child: SafeArea(
