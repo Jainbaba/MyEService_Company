@@ -33,7 +33,6 @@ class _BodyState extends State<Body> {
             SizedBox(
               child: Stack(
                 children: <Widget>[
-
                   Container(
                     margin: EdgeInsets.only(top: size.height * 0.25),
                     padding: EdgeInsets.all(10),
@@ -81,7 +80,6 @@ class _BodyState extends State<Body> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(10.0),
                                         child: Text( widget.product.AcceptedTask ? widget.product.AssignedTask ? widget.product.CompleletedTask ? "Task is Completed" : "Task has been Assigned" : "Task is Accepted" : "Request Has been sent"
-
                                           ,style: TextStyle(fontSize: 18 ),),
                                       ),
                                     ),
@@ -102,7 +100,7 @@ class _BodyState extends State<Body> {
                                   ),
                                 ),
                                 /*height: double.infinity,*/
-                                padding: new EdgeInsets.only(left: 50.0,right: 50.0,top: 20,bottom: 20),
+                                padding: new EdgeInsets.only(left: 20.0,right: 20.0,top: 20,bottom: 20),
                                 child:Container(
                                   child: Row(
                                     children: [
@@ -240,6 +238,7 @@ class _BodyState extends State<Body> {
                               child: Align(
                                 alignment: Alignment.bottomCenter,
                                 child: SliderButton(
+                                  dismissible: widget.product.CompleletedTask ? true : false,
                                     width: MediaQuery.of(context).size.width * 0.90,
                                     action: () {
                                       final database = Provider.of<Database>(context, listen: false);

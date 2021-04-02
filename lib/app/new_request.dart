@@ -14,37 +14,42 @@ class _NewRequestState extends State<NewRequest> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 5.0, top: 20),
-            child: Text(
-              "My Requests",
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headline5
-                  .copyWith(fontWeight: FontWeight.bold, fontSize: 20),
+    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
+    return RefreshIndicator(
+      key: _refreshIndicatorKey,
+      onRefresh: getHistoryData,
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 5.0, top: 20),
+              child: Text(
+                "My Requests",
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline5
+                    .copyWith(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
             ),
-          ),
-          NewRequestProduct != null
-              ? Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ListView.builder(
-                  itemCount: NewRequestProduct.length,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) =>
-                  NewRequestProduct[index] != null
-                      ? HistoryProduct(
-                      product: NewRequestProduct[index], press: () {})
-                      : Container()),
-            ),
-          )
-              : Container()
-        ],
+            NewRequestProduct != null
+                ? Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ListView.builder(
+                    itemCount: NewRequestProduct.length,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) =>
+                    NewRequestProduct[index] != null
+                        ? HistoryProduct(
+                        product: NewRequestProduct[index], press: () {})
+                        : Container()),
+              ),
+            )
+                : Container()
+          ],
+        ),
       ),
     );
   }

@@ -18,8 +18,7 @@ class ColorAndSize extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text("Serial Number"),
-              Text(
-                product.serialNumber,
+              Text(product.serialNumber,
                 style: TextStyle(color: Colors.black,fontSize: 18),
               ),
             ],
