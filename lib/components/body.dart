@@ -27,6 +27,8 @@ class _BodyState extends State<Body> {
 
   String valueText;
 
+  var didRequestSignOut;
+
   @override
   Widget build(BuildContext context) {
     // It provide us total height and width
@@ -308,6 +310,7 @@ class _BodyState extends State<Body> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500),)
                                       : Container(),
+                                  SizedBox(height: 10,),
                                   Text("To: ${widget.product.requestSent}",),
                                   SizedBox(height: 10,),
                                   Text("From: ${widget.product.Username}",),
@@ -342,19 +345,18 @@ class _BodyState extends State<Body> {
                                       } else
                                       if (widget.product.AcceptedTask & !widget
                                           .product.AssignedTask) {
-                                        final didRequestSignOut = await PlatformAssignDialog(
+                                        didRequestSignOut = await PlatformAssignDialog(
                                           title: 'Assign Techie',
                                           cancelActionText: 'Cancel',
                                           defaultActionText: 'Submit',
                                         ).show(context);
-                                        if (didRequestSignOut == true) {
-                                          print("hello");
-                                          /*database.sendAssignedRequest(
-                                              widget.product).then((value) {
+                                        if (didRequestSignOut["value"] == true) {
+                                          database.sendAssignedRequest(
+                                              widget.product,didRequestSignOut["name"],didRequestSignOut["number"],didRequestSignOut["shortDes"]).then((value) {
                                             setState(() {
                                               widget.product = value;
                                             });
-                                          });*/
+                                          });
                                         }
                                       } else
                                       if (widget.product.AcceptedTask & widget

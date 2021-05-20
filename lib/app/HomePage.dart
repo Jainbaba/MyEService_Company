@@ -1,6 +1,7 @@
 import 'package:custom_navigator/custom_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:my_e_service_company/app/Product.dart';
+import 'package:my_e_service_company/app/Profile_Inpage.dart';
 import 'package:my_e_service_company/app/complete_request.dart';
 import 'package:my_e_service_company/app/new_request.dart';
 import 'package:my_e_service_company/common_widgets/platform_alert_dialog.dart';
@@ -9,9 +10,10 @@ import 'package:my_e_service_company/service/auth.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-
+  HomePage({this.uid});
   @override
   _HomePageState createState() => _HomePageState();
+  String uid;
 }
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
@@ -68,10 +70,19 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     /* appBar: AppBar(
-        title: Text('Home Page'),
+     appBar: AppBar(
+        title: Text("MyEService Company"),
         actions: <Widget>[
-          TextButton(
+          ElevatedButton.icon(onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  fullscreenDialog: true,
+                  builder: (context) => Provider<Database>(
+                      create: (_) => FireStoreDatabase(uid: widget.uid), child: ProfileInPage())),
+            );
+          }, icon: Icon(Icons.person), label: Text(""))
+          /*TextButton(
             child: Text(
               'Logout',
               style: TextStyle(
@@ -80,9 +91,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ),
             ),
             onPressed: () => _confirmSignOut(context),
-          ),
+          ),*/
         ],
-      ),*/
+      ),
       bottomNavigationBar: new Material(
         color: Colors.indigo,
         child: SafeArea(

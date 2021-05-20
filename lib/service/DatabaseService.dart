@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:my_e_service_company/app/Product.dart';
 
 abstract class Database {
@@ -6,15 +7,19 @@ abstract class Database {
 
   Future sendAcceptedRequest(Product prdt);
 
-  Future sendAssignedRequest(Product prdt);
+  Future sendAssignedRequest(Product prdt,techieName,techieNumber,ShortDes);
 
   Future sendCompleteRequest(Product product);
+
+  Future getProfileData();
 }
 
 class FireStoreDatabase implements Database {
   FireStoreDatabase({this.uid});
 
   final String uid;
+
+
 
   Future<List<Product>> getMyRequestProductData() async {
     List<Product> products = List<Product>();
@@ -126,7 +131,7 @@ class FireStoreDatabase implements Database {
   }
 
 
-  Future sendAssignedRequest(Product prdt) async {
+  Future sendAssignedRequest(Product prdt,techieName,techieNumber,ShortDes) async {
     Product prdt1 = new Product();
     String RequID = prdt.RequestID;
     String UserUid = prdt.UserUid;
@@ -135,7 +140,9 @@ class FireStoreDatabase implements Database {
     await documentReference.update(
         {
           "Request Status Assigned" : true,
-          "Request Status Assigned TimeStamp" : Timestamp.now()
+          "Request Status Assigned TimeStamp" : Timestamp.now(),
+          "Request Status Assigned Person Name" : techieName,
+          "Request Status Assigned Person PhoneNumber" : techieNumber
         }
     ).whenComplete(() async {
       print("${UserUid.toString()} and  $RequID");
@@ -144,7 +151,9 @@ class FireStoreDatabase implements Database {
       await documentReference1.update(
           {
             "Request Status Assigned" : true,
-            "Request Status Assigned TimeStamp" : Timestamp.now()
+            "Request Status Assigned TimeStamp" : Timestamp.now(),
+            "Request Status Assigned Person Name" : techieName,
+            "Request Status Assigned Person PhoneNumber" : techieNumber
           }
       ).catchError((onError) {
         print(onError.toString());
@@ -252,5 +261,30 @@ class FireStoreDatabase implements Database {
       print(onError.toString());
     });
     return prdt1;
+  }
+
+  Future getProfileData() async {
+    var data;
+    await FirebaseDatabase.instance
+        .reference()
+        .child("brand_list")
+        .once()
+        .then((value) {
+      Map<dynamic, dynamic> brandData =
+      Map<dynamic, dynamic>.from(value.value as Map<dynamic, dynamic>);
+      brandData.forEach((brandkey, value) {
+        if(value["user_id"].toString() == uid){
+          data = {
+            "id": value["brandId"],
+            "title": brandkey,
+            "email": value["email"],
+            "phone": value["phone_number"].toString(),
+            "firebaseuser": value["user_id"].toString(),
+            "img": value["brand_logo"].toString(),
+          };
+        }
+      });
+    });
+    return data;
   }
 }

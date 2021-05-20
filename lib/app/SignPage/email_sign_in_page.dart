@@ -23,6 +23,8 @@ class _EmailSignInPageState extends State<EmailSignInPage> {
 
   final FocusNode passwordnode = FocusNode();
 
+  BaseUser user;
+
 
   String validateEmail(String value) {
     Pattern pattern =
@@ -124,9 +126,9 @@ class _EmailSignInPageState extends State<EmailSignInPage> {
     final auth = Provider.of<AuthBase>(context,listen: false);
     if (_formKey.currentState.validate()) {
       try{
-        await auth.signInWithEmailAndPassword(email, password);
+        user = await auth.signInWithEmailAndPassword(email, password);
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                              builder: (context) => HomePage()), (route) => false);
+                              builder: (context) => HomePage(uid: user.uid,)), (route) => false);
         //Navigator.pop(context);
       } on FirebaseAuthException catch (e){
         _showSignInError(context, e);
