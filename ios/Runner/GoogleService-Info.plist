@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>178031477070-ak2ed5v2m7e46cltssjuf6fnqok9j6ti.apps.googleusercontent.com</string>
+	<string>178031477070-vt5oje27jqvisg96e0fmo6af8mrisnmv.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.178031477070-ak2ed5v2m7e46cltssjuf6fnqok9j6ti</string>
+	<string>com.googleusercontent.apps.178031477070-vt5oje27jqvisg96e0fmo6af8mrisnmv</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>178031477070-e2j34kc32ko70km8cgf6q55ln67n9mb5.apps.googleusercontent.com</string>
+	<string>178031477070-6s54a1s31pfu0qlg643g4g834ed0pmbf.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBwRMWNXgFmM1CHr2IOPqT5b5AOIIJYPmU</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.myEServiceCompany</string>
+	<string>com.myttech.myEServiceCompany</string>
 	<key>PROJECT_ID</key>
 	<string>myeservice-15c35</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:178031477070:ios:d2347a0a7219bdd6d99e1f</string>
+	<string>1:178031477070:ios:751c83b6c0568841d99e1f</string>
+	<key>DATABASE_URL</key>
+	<string>https://myeservice-15c35-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

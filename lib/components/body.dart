@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_e_service_company/app/Product.dart';
+import 'package:my_e_service_company/common_widgets/platform_assigned_dialog.dart';
 import 'package:my_e_service_company/service/DatabaseService.dart';
 import 'package:provider/provider.dart';
 import 'package:slider_button/slider_button.dart';
@@ -22,10 +25,14 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   bool valuefirst = false;
 
+  String valueText;
+
   @override
   Widget build(BuildContext context) {
     // It provide us total height and width
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
@@ -79,8 +86,15 @@ class _BodyState extends State<Body> {
                                     Expanded(
                                       child: Padding(
                                         padding: const EdgeInsets.all(10.0),
-                                        child: Text( widget.product.AcceptedTask ? widget.product.AssignedTask ? widget.product.CompleletedTask ? "Task is Completed" : "Task has been Assigned" : "Task is Accepted" : "Request Has been sent"
-                                          ,style: TextStyle(fontSize: 18 ),),
+                                        child: Text(
+                                          widget.product.AcceptedTask
+                                              ? widget.product.AssignedTask
+                                              ? widget.product.CompleletedTask
+                                              ? "Task is Completed"
+                                              : "Task has been Assigned"
+                                              : "Task is Accepted"
+                                              : "Request Has been sent"
+                                          , style: TextStyle(fontSize: 18),),
                                       ),
                                     ),
                                   ]),
@@ -89,76 +103,136 @@ class _BodyState extends State<Body> {
 
                             ),
                             Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  border: Border(bottom: BorderSide(color: Colors.grey,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: Colors.grey,
                                     width: 1,),
-                                    right: BorderSide(color: Colors.grey,
-                                      width: 1,),
-                                    left: BorderSide(color: Colors.grey,
-                                      width: 1,),
-                                  ),
+                                  right: BorderSide(color: Colors.grey,
+                                    width: 1,),
+                                  left: BorderSide(color: Colors.grey,
+                                    width: 1,),
                                 ),
-                                /*height: double.infinity,*/
-                                padding: new EdgeInsets.only(left: 20.0,right: 20.0,top: 20,bottom: 20),
-                                child:Container(
-                                  child: Row(
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              FaIcon(FontAwesomeIcons.checkCircle,color: Colors.green,),
-                                              SizedBox(width: 20,),
-                                              Container(
-                                                  child: Text("Request has been sent\n${DateFormat("dd-MM-yyyy HH:ss").format(widget.product.timestamp.toDate())}")),
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 8.0,right: 8.0),
-                                            child: FaIcon(FontAwesomeIcons.ellipsisV,color: Colors.grey[500],size: 16,),
-                                          ),
-                                          Row(
-                                            children: [
-                                              widget.product.AcceptedTask ? FaIcon(FontAwesomeIcons.checkCircle,color: Colors.green,) : FaIcon(FontAwesomeIcons.circle,color: Colors.grey,),
-                                              SizedBox(width: 20,),
-                                              widget.product.AcceptedTask ? Text("Request has been Accepted\n${DateFormat("dd-MM-yyyy HH:ss").format(widget.product.AcceptedTimestamp.toDate())}") :
-                                              Container(
-                                                  height: 35,child: Center(child: Text("Waiting to be Accepted")))
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 8.0,right: 8.0),
-                                            child: FaIcon(FontAwesomeIcons.ellipsisV,color: Colors.grey[500],size: 16,),
-                                          ),
-                                          Row(
-                                            children: [
-                                              widget.product.AssignedTask ? FaIcon(FontAwesomeIcons.checkCircle,color: Colors.green,) : FaIcon(FontAwesomeIcons.circle,color: Colors.grey,),
-                                              SizedBox(width: 20,),
-                                              widget.product.AssignedTask ? Text("Request has been Assigned\n${DateFormat("dd-MM-yyyy HH:ss").format(widget.product.AssignedTimestamp.toDate())}") : Container(height: 35,
-                                                  child: Center(child: Text("Waiting for a person to be Assigned"))),
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 8.0,right: 8.0),
-                                            child: FaIcon(FontAwesomeIcons.ellipsisV,color: Colors.grey[500],size: 16,),
-                                          ),
-                                          Row(
-                                            children: [
-                                              widget.product.CompleletedTask ? FaIcon(FontAwesomeIcons.checkCircle,color: Colors.green,) : FaIcon(FontAwesomeIcons.circle,color: Colors.grey,),
-                                              SizedBox(width: 20,),
-                                              widget.product.CompleletedTask ? Text("Request has been Completed\n${DateFormat("dd-MM-yyyy HH:ss").format(widget.product.completedTimestamp.toDate())}") : Container(
-                                                  height: 35
-                                                  ,child: Center(child: Text("Waiting for the task to be Completed")))
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                              ),
+                              /*height: double.infinity,*/
+                              padding: new EdgeInsets.only(
+                                  left: 20.0, right: 20.0, top: 20, bottom: 20),
+                              child: Container(
+                                child: Row(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment
+                                          .start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            FaIcon(FontAwesomeIcons.checkCircle,
+                                              color: Colors.green,),
+                                            SizedBox(width: 20,),
+                                            Container(
+                                                child: Text(
+                                                    "Request has been sent\n${DateFormat(
+                                                        "dd-MM-yyyy HH:ss")
+                                                        .format(
+                                                        widget.product.timestamp
+                                                            .toDate())}")),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0, right: 8.0),
+                                          child: FaIcon(
+                                            FontAwesomeIcons.ellipsisV,
+                                            color: Colors.grey[500], size: 16,),
+                                        ),
+                                        Row(
+                                          children: [
+                                            widget.product.AcceptedTask
+                                                ? FaIcon(
+                                              FontAwesomeIcons.checkCircle,
+                                              color: Colors.green,)
+                                                : FaIcon(
+                                              FontAwesomeIcons.circle,
+                                              color: Colors.grey,),
+                                            SizedBox(width: 20,),
+                                            widget.product.AcceptedTask ? Text(
+                                                "Request has been Accepted\n${DateFormat(
+                                                    "dd-MM-yyyy HH:ss").format(
+                                                    widget.product
+                                                        .AcceptedTimestamp
+                                                        .toDate())}") :
+                                            Container(
+                                                height: 35,
+                                                child: Center(child: Text(
+                                                    "Waiting to be Accepted")))
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0, right: 8.0),
+                                          child: FaIcon(
+                                            FontAwesomeIcons.ellipsisV,
+                                            color: Colors.grey[500], size: 16,),
+                                        ),
+                                        Row(
+                                          children: [
+                                            widget.product.AssignedTask
+                                                ? FaIcon(
+                                              FontAwesomeIcons.checkCircle,
+                                              color: Colors.green,)
+                                                : FaIcon(
+                                              FontAwesomeIcons.circle,
+                                              color: Colors.grey,),
+                                            SizedBox(width: 20,),
+                                            widget.product.AssignedTask
+                                                ? Text(
+                                                "Request has been Assigned\n${DateFormat(
+                                                    "dd-MM-yyyy HH:ss").format(
+                                                    widget.product
+                                                        .AssignedTimestamp
+                                                        .toDate())}")
+                                                : Container(height: 35,
+                                                child: Center(child: Text(
+                                                    "Waiting for a person to be Assigned"))),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0, right: 8.0),
+                                          child: FaIcon(
+                                            FontAwesomeIcons.ellipsisV,
+                                            color: Colors.grey[500], size: 16,),
+                                        ),
+                                        Row(
+                                          children: [
+                                            widget.product.CompleletedTask
+                                                ? FaIcon(
+                                              FontAwesomeIcons.checkCircle,
+                                              color: Colors.green,)
+                                                : FaIcon(
+                                              FontAwesomeIcons.circle,
+                                              color: Colors.grey,),
+                                            SizedBox(width: 20,),
+                                            widget.product.CompleletedTask
+                                                ? Text(
+                                                "Request has been Completed\n${DateFormat(
+                                                    "dd-MM-yyyy HH:ss").format(
+                                                    widget.product
+                                                        .completedTimestamp
+                                                        .toDate())}")
+                                                : Container(
+                                                height: 35
+                                                ,
+                                                child: Center(child: Text(
+                                                    "Waiting for the task to be Completed")))
+                                          ],
+                                        ),
+                                      ],
+                                    ),
 
-                                    ],
-                                  ),
+                                  ],
                                 ),
+                              ),
 
                               /* Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -213,8 +287,9 @@ class _BodyState extends State<Body> {
                             Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                border: Border(bottom: BorderSide(color: Colors.grey,
-                                  width: 1,),
+                                border: Border(
+                                  bottom: BorderSide(color: Colors.grey,
+                                    width: 1,),
                                   right: BorderSide(color: Colors.grey,
                                     width: 1,),
                                   left: BorderSide(color: Colors.grey,
@@ -224,12 +299,21 @@ class _BodyState extends State<Body> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  widget.product.AssignedTask ? Text("Assigned Techie: ${widget.product.AssignedTechiename}") : Container(),
-                                  widget.product.AssignedTask ? Text("${widget.product.AssignedTechiePhone}",style: TextStyle(fontWeight: FontWeight.w500),) : Container(),
+                                  widget.product.AssignedTask ? Text(
+                                      "Assigned Techie: ${widget.product
+                                          .AssignedTechiename}") : Container(),
+                                  widget.product.AssignedTask
+                                      ? Text(
+                                    "${widget.product.AssignedTechiePhone}",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500),)
+                                      : Container(),
                                   Text("To: ${widget.product.requestSent}",),
                                   SizedBox(height: 10,),
                                   Text("From: ${widget.product.Username}",),
-                                  Text("${widget.product.UserPhone}",style: TextStyle(fontWeight: FontWeight.w500),),
+                                  Text("${widget.product.UserPhone}",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500),),
                                 ],
                               ),
                             ),
@@ -238,10 +322,16 @@ class _BodyState extends State<Body> {
                               child: Align(
                                 alignment: Alignment.bottomCenter,
                                 child: SliderButton(
-                                  dismissible: widget.product.CompleletedTask ? true : false,
-                                    width: MediaQuery.of(context).size.width * 0.90,
-                                    action: () {
-                                      final database = Provider.of<Database>(context, listen: false);
+                                    dismissible: widget.product.CompleletedTask
+                                        ? true
+                                        : false,
+                                    width: MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width * 0.90,
+                                    action: () async {
+                                      final database = Provider.of<Database>(
+                                          context, listen: false);
                                       if (!widget.product.AcceptedTask) {
                                         database.sendAcceptedRequest(
                                             widget.product).then((value) {
@@ -249,14 +339,27 @@ class _BodyState extends State<Body> {
                                             widget.product = value;
                                           });
                                         });
-                                      } else if (widget.product.AcceptedTask & !widget.product.AssignedTask){
-                                        database.sendAssignedRequest(
-                                            widget.product).then((value) {
-                                          setState(() {
-                                            widget.product = value;
-                                          });
-                                        });
-                                      }else if (widget.product.AcceptedTask & widget.product.AssignedTask & !widget.product.CompleletedTask) {
+                                      } else
+                                      if (widget.product.AcceptedTask & !widget
+                                          .product.AssignedTask) {
+                                        final didRequestSignOut = await PlatformAssignDialog(
+                                          title: 'Assign Techie',
+                                          cancelActionText: 'Cancel',
+                                          defaultActionText: 'Submit',
+                                        ).show(context);
+                                        if (didRequestSignOut == true) {
+                                          print("hello");
+                                          /*database.sendAssignedRequest(
+                                              widget.product).then((value) {
+                                            setState(() {
+                                              widget.product = value;
+                                            });
+                                          });*/
+                                        }
+                                      } else
+                                      if (widget.product.AcceptedTask & widget
+                                          .product.AssignedTask & !widget
+                                          .product.CompleletedTask) {
                                         print("hello");
                                         database.sendCompleteRequest(
                                             widget.product).then((value) {
@@ -267,7 +370,11 @@ class _BodyState extends State<Body> {
                                       }
                                     },
                                     label: Text(
-                                      widget.product.AcceptedTask ? widget.product.AssignedTask ? "Slide to Complete the Task" : "Slide to Assign the Task" : "Slide to Accept the Task",
+                                      widget.product.AcceptedTask
+                                          ? widget.product.AssignedTask
+                                          ? "Slide to Complete the Task"
+                                          : "Slide to Assign the Task"
+                                          : "Slide to Accept the Task",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           color: Color(0xff4a4a4a),
