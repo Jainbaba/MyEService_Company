@@ -40,7 +40,7 @@ class PlatformAssignDialog extends PlatformWidget {
   Widget buildCupertinoWidget(BuildContext context) {
     return CupertinoAlertDialog(
       title: Text(title),
-      content: Container(
+      content: CupertinoPageScaffold(
         //height: 250,
         child: Form(
           key: _formKey,
@@ -48,32 +48,34 @@ class PlatformAssignDialog extends PlatformWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextFormField(
-                decoration: InputDecoration(
+              CupertinoTextFormFieldRow(
+                /*decoration: InputDecoration(
                   labelText: "Techie Name",
-                ),
+                ),*/
+                placeholder: "Techie Name",
                 textInputAction: TextInputAction.done,
                 validator: (val) => val.isEmpty ? "Enter Techie Name" : null,
                 onChanged: (val) {
                   techieName = val;
                 },
               ),
-              TextFormField(
-                decoration: InputDecoration(
+              CupertinoTextFormFieldRow(
+                /*decoration: InputDecoration(
                   labelText: "Techie Phone Number",
-
-                ),
+                ),*/
+                placeholder: "Techie Phone Number",
                 textInputAction: TextInputAction.done,
                 validator: (val) => val.isEmpty ? "Enter Techie Phone Number" : null,
                 onChanged: (val) {
                   techieNumber = val;
                 },
               ),
-              TextFormField(
-                decoration: InputDecoration(
+              CupertinoTextFormFieldRow(
+                /*decoration: InputDecoration(
                     labelText: "Short Description",
                     alignLabelWithHint: true
-                ),
+                ),*/
+                placeholder: "Short Description",
                 textInputAction: TextInputAction.done,
                 onChanged: (val) {
                   shortDes = val;
